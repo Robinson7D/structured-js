@@ -1,24 +1,21 @@
-(function(){
-	'use strict';
+'use strict';
 
-	// Dependencies:
-	import BinaryHeap from "binary_heap";
+// Dependencies:
+import BinaryHeap from "binary_heap";
 
-	// Inherit prototype:
-	BinaryMinHeap.prototype = new BinaryHeap();
-	BinaryMinHeap.prototype.constructor = BinaryMinHeap;
-	BinaryMinHeap.prototype._comparator = minComparitor;
+// Inherit prototype:
+BinaryMinHeap.prototype = new BinaryHeap();
+BinaryMinHeap.prototype.constructor = BinaryMinHeap;
+BinaryMinHeap.prototype._comparator = minComparitor;
 
-	// Exit
-	export BinaryMinHeap;
-	return BinaryMinHeap;
+// Exit
+export BinaryMinHeap;
 
-	// Functions:
-	function BinaryMinHeap(config){ // Constructor
-		BinaryHeap.apply(this, arguments);
-	}
+// Functions:
+function BinaryMinHeap(config){ // Constructor
+	BinaryHeap.apply(this, arguments);
+}
 
-	function minComparitor(elementA, elementB){
-		return elementA < elementB;
-	}
-}());
+function minComparitor(elementA, elementB){
+	return elementA < elementB;
+}
