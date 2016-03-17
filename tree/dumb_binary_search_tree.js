@@ -130,7 +130,9 @@ function _removeNode(node){
 
 		// Send subtree down to where it belongs
 		// Can be more efficient by only searching down from
-		this._addNewNode(oldLeftChild, this._findClosestNode(oldLeftChild.element));
+		if(oldLeftChild){
+			this._addNewNode(oldLeftChild, this._findClosestNode(oldLeftChild.element));
+		}
 	}
 	else if(node.leftChild) {
 		promoteTo(node.leftChild, node);
