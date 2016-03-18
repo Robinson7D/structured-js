@@ -21,8 +21,7 @@ They can also help compare and contrast similar (or differently implemented) str
 The initial implementations of data structures are commented very lightly; given that this library is primarily forcused on learning, some sets of steps could benefit from explanation.
 
 ### MORE DATA STRUCTURES! Some examples to implement soon:
-* Binary Search Trees. (Various, balancing - at least AVL and Red-Black)
-** AVL tree is coming next
+* Binary Search Trees. (Various, balancing.)
 * Tries!
 * Suffix Tree, Radix Tree
 * Suffix Array
