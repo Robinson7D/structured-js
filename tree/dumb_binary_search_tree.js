@@ -26,10 +26,10 @@ function DumbBinarySearchTree(config){ // Constructor:
 	this.__size = 0;
 }
 
-function _buildNode(element){ // Constructor:
+function _buildNode(value){ // Constructor:
 	return {
 		parent: null,
-		element: element,
+		value: value,
 		leftChild: undefined,
 		rightChild: undefined,
 		count: 1,
@@ -40,29 +40,29 @@ function getSize(){
 	return this.__size;
 }
 
-function contains(element){
-	return !!this.findNode(element);
+function contains(value){
+	return !!this.findNode(value);
 }
 
-function findNode(element){
-	let closestNode = this._findClosestNode(element);
+function findNode(value){
+	let closestNode = this._findClosestNode(value);
 
-	if(closestNode.element == element){
+	if(closestNode && closestNode.value == value){
 		return closestNode;
 	}
 }
 
-function _findClosestNode(searchElement){
+function _findClosestNode(searchValue){
 	let node = this.head,
-			currentElement;
+			currentValue;
 
 	while(node){
-		currentElement = node.element;
+		currentValue = node.value;
 
-		if(searchElement < currentElement && node.leftChild !== undefined){
+		if(searchValue < currentValue && node.leftChild !== undefined){
 			node = node.leftChild;
 		}
-		else if(searchElement > currentElement && node.rightChild !== undefined) {
+		else if(searchValue > currentValue && node.rightChild !== undefined) {
 			node = node.rightChild;
 		}
 		else {
@@ -71,19 +71,19 @@ function _findClosestNode(searchElement){
 	}
 }
 
-function insert(element){
+function insert(value){
 	if(this.head){
-		let closestNode = this._findClosestNode(element);
+		let closestNode = this._findClosestNode(value);
 
-		if(closestNode.element == element){
+		if(closestNode.value == value){
 			closestNode.count++;
 		}
 		else {
-			this._addNewNode(this._buildNode(element), closestNode);
+			this._addNewNode(this._buildNode(value), closestNode);
 		}
 	}
 	else {
-		this.head = this._buildNode(element);
+		this.head = this._buildNode(value);
 	}
 	this.__size++;
 }
@@ -91,7 +91,7 @@ function insert(element){
 function _addNewNode(node, closestNode){
 	node.parent = closestNode;
 
-	if(node.element < closestNode.element){
+	if(node.value < closestNode.value){
 		closestNode.leftChild = node;
 	}
 	else {
@@ -99,10 +99,10 @@ function _addNewNode(node, closestNode){
 	}
 }
 
-function remove(element){
-	let node = this._findClosestNode(element);
+function remove(value){
+	let node = this._findClosestNode(value);
 
-	if(node.element == element){
+	if(node.value == value){
 		if(node.count === 1){
 			this._removeNode(node)
 		}
@@ -131,7 +131,7 @@ function _removeNode(node){
 		// Send subtree down to where it belongs
 		// Can be more efficient by only searching down from
 		if(oldLeftChild){
-			this._addNewNode(oldLeftChild, this._findClosestNode(oldLeftChild.element));
+			this._addNewNode(oldLeftChild, this._findClosestNode(oldLeftChild.value));
 		}
 	}
 	else if(node.leftChild) {
@@ -155,7 +155,7 @@ function _removeNode(node){
 
 function promoteTo(node, oldParent){
 	// TODO: consider using the `.parent` property for full Object swap instead
-	oldParent.element = node.element;
+	oldParent.value = node.value;
 	oldParent.count = node.count;
 
 	oldParent.leftChild = node.leftChild;

@@ -28,10 +28,10 @@ function AVLTree(config){ // Constructor:
 	return DumbBinarySearchTree.apply(this, arguments);
 }
 
-function _buildNode(element){ // Constructor:
+function _buildNode(value){ // Constructor:
 	return {
 		parent: null,
-		element: element,
+		value: value,
 		leftChild: undefined,
 		rightChild: undefined,
 		count: 1,
@@ -45,7 +45,7 @@ function _buildNode(element){ // Constructor:
 function _addNewNode(node, closestNode){
 	node.parent = closestNode;
 
-	if(node.element < closestNode.element){
+	if(node.value < closestNode.value){
 		closestNode.leftChild = node;
 	}
 	else {
@@ -93,7 +93,7 @@ function _smallestDescendent(node){
 }
 
 function rebalanceUp(closestNode){
-	do {
+	while(closestNode){
 		updateHeightAndBalance(closestNode);
 
 		if(closestNode.balancingFactor > 1) { // Pivot up the left side:
@@ -108,11 +108,9 @@ function rebalanceUp(closestNode){
 			}
 			this._rotateLeft(closestNode);
 		}
-		// // I don't quite trust this. Will want to prove it first
-		// else if(closestNode.balancingFactor === 0) {
-		// 	return; // Balanced!
-		// }
-	} while(closestNode = closestNode.parent);
+
+		closestNode = closestNode.parent;
+	}
 }
 
 function updateHeightAndBalance(node){
@@ -152,7 +150,10 @@ function _updateParentReference(node, newChild){
 	}
 	else {
 		this.head = newChild;
-		newChild.parent = null;
+
+		if(newChild){
+			newChild.parent = null;
+		}
 	}
 }
 
