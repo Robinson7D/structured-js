@@ -1,6 +1,8 @@
 let expect = require('chai').expect;
 
 import {buildSmallDistributed} from '../../helpers/number_array_builders';
+import {BreadthFirstGenerator} from '../../helpers/tree_traversals';
+
 export default itActsAsBinarySearchTree;
 
 function itActsAsBinarySearchTree(TreeClass){
@@ -25,128 +27,152 @@ function itActsAsBinarySearchTree(TreeClass){
 		BASE_VALUES.forEach((value)=> bst.insert(value));
 	});
 
-	describe('tree structure', function(){
-		describe('head property', function(){
-			it('is undefined initially', function(){
-				expect(emptyBst.head).not.to.exist;
+	describe('head property', function(){
+		it('is undefined initially', function(){
+			expect(emptyBst.head).not.to.exist;
+		});
+
+		it('is an Object when the tree is populated', function(){
+			expect(bst.head).to.be.an('object');
+		});
+
+		it('can be added and removed', function(){
+			emptyBst.insert(1);
+			expect(bst.head).to.be.an('object');
+
+			emptyBst.remove(1);
+			expect(emptyBst.head).not.to.exist;
+		});
+	});
+
+	describe('nodes', function(){
+		let node;
+
+		function itIsAValidNode(){
+			it('should have a value', function(){
+				expect(node.value).to.exist;
 			});
 
-			it('is an Object when the tree is populated', function(){
-				expect(bst.head).to.be.an('object');
+			it('should have a count', function(){
+				expect(node.count).to.be.above(0);
 			});
+		}
 
-			it('can be added and removed', function(){
-				emptyBst.insert(1);
-				expect(bst.head).to.be.an('object');
+		describe('head node', function(){
+			beforeEach(()=> node = bst.head);
 
-				emptyBst.remove(1);
-				expect(emptyBst.head).not.to.exist;
+			itIsAValidNode();
+
+			it('should have no parent', function(){
+				expect(bst.head.parent).not.to.exist;
 			});
 		});
 
-		describe('nodes', function(){
-			let node;
+		describe('non-head-non-leaf-nodes', function(){
+			beforeEach(()=> node = bst.head.leftChild);
 
-			function itIsAValidNode(){
-				it('should have a value', function(){
-					expect(node.value).to.exist;
-				});
+			itIsAValidNode();
 
-				it('should have a count', function(){
-					expect(node.count).to.be.above(0);
-				});
-			}
+			it('should have parent set correctly', function(){
+				expect(node.leftChild.parent).to.equal(node);
+				expect(node.rightChild.parent).to.equal(node);
 
-			describe('head node', function(){
-				beforeEach(()=> node = bst.head);
-
-				itIsAValidNode();
-
-				it('should have no parent', function(){
-					expect(bst.head.parent).not.to.exist;
-				});
+				expect(node.rightChild.leftChild.parent).to.equal(node.rightChild);
 			});
 
-			describe('non-head-non-leaf-nodes', function(){
-				beforeEach(()=> node = bst.head.leftChild);
-
-				itIsAValidNode();
-
-				it('should have parent set correctly', function(){
-					expect(node.leftChild.parent).to.equal(node);
-					expect(node.rightChild.parent).to.equal(node);
-
-					expect(node.rightChild.leftChild.parent).to.equal(node.rightChild);
-				});
-
-				describe('children', function(){
-					function itPointsToANode(childProp){
-						it('points to a node Object', function(){
-							expect(node[childProp]).to.be.an('object');
-						});
-					}
-
-					describe('leftChild', function(){
-						itPointsToANode('leftChild');
+			describe('children', function(){
+				function itPointsToANode(childProp){
+					it('points to a node Object', function(){
+						expect(node[childProp]).to.be.an('object');
 					});
+				}
 
-					describe('rightChild', function(){
-						itPointsToANode('rightChild');
-					});
+				describe('leftChild', function(){
+					itPointsToANode('leftChild');
+				});
+
+				describe('rightChild', function(){
+					itPointsToANode('rightChild');
 				});
 			});
+		});
 
-			describe('leaves', function(){
-				let leaf;
-				beforeEach(() => {
-					node = findLeaf(bst.head);
-					leaf = node;
-				});
-
-				itIsAValidNode();
-
-				it('should not have a leftChild', function(){
-					expect(leaf.leftChild).not.to.exist;
-				});
-
-				it('should not have a rightChild', function(){
-					expect(leaf.rightChild).not.to.exist;
-				});
-
-				it('should have a parent', function(){
-					expect(leaf.parent).to.exist;
-				});
+		describe('leaves', function(){
+			let leaf;
+			beforeEach(() => {
+				node = findLeaf(bst.head);
+				leaf = node;
 			});
 
-			describe('count', function(){
-				it('increments as values are added', function(){
-					const VALUE = 777;
+			itIsAValidNode();
 
-					emptyBst.insert(VALUE);
-					expect(emptyBst.head.count).to.equal(1);
+			it('should not have a leftChild', function(){
+				expect(leaf.leftChild).not.to.exist;
+			});
 
-					emptyBst.insert(VALUE);
-					expect(emptyBst.head.count).to.equal(2);
+			it('should not have a rightChild', function(){
+				expect(leaf.rightChild).not.to.exist;
+			});
 
-					emptyBst.insert(VALUE);
-					expect(emptyBst.head.count).to.equal(3);
-				});
+			it('should have a parent', function(){
+				expect(leaf.parent).to.exist;
+			});
+		});
 
-				it('decrements as values are removed', function(){
-					const VALUE = 777;
+		describe('count', function(){
+			it('increments as values are added', function(){
+				const VALUE = 777;
 
-					emptyBst.insert(VALUE);
-					emptyBst.insert(VALUE);
-					emptyBst.insert(VALUE);
+				emptyBst.insert(VALUE);
+				expect(emptyBst.head.count).to.equal(1);
 
-					expect(emptyBst.head.count).to.equal(3);
+				emptyBst.insert(VALUE);
+				expect(emptyBst.head.count).to.equal(2);
 
-					emptyBst.remove(VALUE);
-					expect(emptyBst.head.count).to.equal(2);
+				emptyBst.insert(VALUE);
+				expect(emptyBst.head.count).to.equal(3);
+			});
 
-					emptyBst.remove(VALUE);
-					expect(emptyBst.head.count).to.equal(1);
-				});
+			it('decrements as values are removed', function(){
+				const VALUE = 777;
+
+				emptyBst.insert(VALUE);
+				emptyBst.insert(VALUE);
+				emptyBst.insert(VALUE);
+
+				expect(emptyBst.head.count).to.equal(3);
+
+				emptyBst.remove(VALUE);
+				expect(emptyBst.head.count).to.equal(2);
+
+				emptyBst.remove(VALUE);
+				expect(emptyBst.head.count).to.equal(1);
+			});
+		});
+	});
+
+
+	describe('tree structure', function(){
+		function getAllNodes(){
+			return Array.from(new BreadthFirstGenerator(bst));
+		}
+		it('always places smaller values on the left', function(){
+			let allNodesWithALeftChild = getAllNodes().filter((node)=> node.leftChild);
+
+			expect(allNodesWithALeftChild.length).to.be.above(0);
+
+			allNodesWithALeftChild.forEach(function(node){
+				expect(node.leftChild.value).to.be.below(node.value);
+			});
+		});
+
+		it('always places larger values on the right', function(){
+			let allNodesWithARightChild = getAllNodes().filter((node)=> node.rightChild);
+
+			expect(allNodesWithARightChild.length).to.be.above(0);
+
+			allNodesWithARightChild.forEach(function(node){
+				expect(node.rightChild.value).to.be.above(node.value);
 			});
 		});
 	});
