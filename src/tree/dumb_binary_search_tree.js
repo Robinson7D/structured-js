@@ -86,6 +86,7 @@ function insert(value){
 		this.head = this._buildNode(value);
 	}
 	this.__size++;
+	return this;
 }
 
 function _addNewNode(node, closestNode){
@@ -112,6 +113,7 @@ function remove(value){
 
 		this.__size--;
 	}
+	return this;
 }
 
 function _removeNode(node){
