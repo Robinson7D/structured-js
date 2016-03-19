@@ -10,12 +10,16 @@
   },
   "devDependencies": {
     "babel-core": "^6.0.20",
-    "babel-polyfill": "^6.0.16",
     "babel-preset-es2015": "^6.0.15",
+
     "chai": "*",
-    "mocha": "*"
+    "mocha": "*",
+
+    "babel-cli": "^6.2.0",
+    "istanbul": "^1.0.0-alpha"
   },
   "scripts": {
-    "test": "mocha ./auxiliary_scripts/test/**/*.js --compilers js:babel-core/register --require babel-polyfill"
+    "test": "mocha",
+    "cover": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha"
   }
 }

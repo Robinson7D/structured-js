@@ -1,4 +1,4 @@
-import AVLTree from '../../../tree/avl_tree';
+import AVLTree from '../../src/tree/avl_tree';
 import itActsAsBinarySearchTree from './_binary_search_tree';
 
 let expect = require('chai').expect;
