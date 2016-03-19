@@ -266,6 +266,12 @@ function itActsAsBinarySearchTree(TreeClass){
 	});
 
 	describe('insert', function(){
+		describe("chaining", function(){
+			it("returns self to allow chaining", function(){
+				expect(bst.insert(1)).to.equal(bst);
+			});
+		});
+
 		describe('empty trees', function(){
 			it('adds a head', function(){
 				expect(emptyBst.head).to.not.exist;
@@ -306,8 +312,112 @@ function itActsAsBinarySearchTree(TreeClass){
 		});
 	});
 
+	describe("remove", function(){
+		describe("chaining", function(){
+			it("returns self to allow chaining", function(){
+				expect(bst.remove(1)).to.equal(bst);
+			});
+		});
+		describe("missing values", function(){
+		});
+		describe("removing head", function(){
+			let oldHead, oldHeadValue;
+			beforeEach(function(){
+				oldHead = bst.head;
+				oldHeadValue = bst.head.value;
+				bst.remove(oldHeadValue);
+			});
+
+			it("removes the head value", function(){
+				expect(bst.findNode(oldHeadValue)).to.not.exist;
+			});
+
+			it("sets a new head value", function(){
+				expect(bst.head).to.exist;
+				expect(bst.head.value).to.not.equal(oldHeadValue);
+			});
+
+			it("promoted a descendent", function(){
+				expect(BASE_VALUES).to.include(bst.head.value);
+			});
+
+			it("removed the old instance of the descendent", function(){
+				let promotedValue = bst.head.value;
+
+				bst.remove(promotedValue);
+				expect(bst.findNode(promotedValue)).to.not.exist;
+			});
+		});
+
+		describe("removing leaves", function(){
+			const mid = 5, low = 2, high = 8;
+			let simpleTree;
+			beforeEach(function(){
+				simpleTree = new TreeClass();
+
+				simpleTree.insert(mid);
+				simpleTree.insert(low);
+				simpleTree.insert(high);
+			});
+
+			describe("left-most leaf removal", function(){
+				beforeEach(()=> simpleTree.remove(low));
+
+				it('removes the value', function(){
+					expect(simpleTree.findNode(low)).to.not.exist;
+				});
+
+				it('updates the parent leftChild reference', function(){
+					expect(simpleTree.head.leftChild).to.not.exist;
+				});
+
+				it('does not remove any other nodes', function(){
+					expect(simpleTree.findNode(mid)).to.exist;
+					expect(simpleTree.findNode(high)).to.exist;
+				});
+			});
+
+			describe("right-most leaf removal", function(){
+				beforeEach(()=> simpleTree.remove(high));
+
+				it('removes the value', function(){
+					expect(simpleTree.findNode(high)).to.not.exist;
+				});
+
+				it('updates the parent rightChild reference', function(){
+					expect(simpleTree.head.rightChild).to.not.exist;
+				});
+
+				it('does not remove any other nodes', function(){
+					expect(simpleTree.findNode(mid)).to.exist;
+					expect(simpleTree.findNode(low)).to.exist;
+				});
+			});
+		});
+
+		describe("removing middle pieces", function(){
+			describe("with two children", function(){
+				let parent, removalSide, removalNode, removalValue;
+
+				beforeEach(function(){
+					parent = bst.head.leftChild;
+					removalSide = "rightChild";
+					removalNode = parent[removalSide];
+					removalValue = removalNode.value;
+				});
+
+				it('is replaced in the parent', function(){
+					bst.remove(removalValue);
+					expect(parent[removalSide].value).to.exist;
+					expect(parent[removalSide].value).not.to.equal(removalValue);
+				});
+
+				// TODO: check children reference new parent
+			});
+		});
+	});
+
 	/* TODO:
-	 *	Public methods: remove
 	 *  Private methods: _buildNode, _addNewNode, _removeNode
 	*/
 }
