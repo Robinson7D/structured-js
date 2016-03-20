@@ -34,7 +34,6 @@ function peek() {
 function insert(element) {
 	this.__elements[this.getSize()] = element;
 	this._bubbleUpBalance();
-	this._sinkDownBalance();
 }
 
 function remove() {
