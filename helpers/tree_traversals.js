@@ -2,6 +2,7 @@ require("babel-polyfill");
 
 export {
 	BreadthFirstGenerator,
+	BreadthFirstGenerator as fastTreeTraversal, // aliased, currently the fastest way if order doesn't matter
 };
 
 function *BreadthFirstGenerator(tree){

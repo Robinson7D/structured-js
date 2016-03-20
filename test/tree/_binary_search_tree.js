@@ -413,6 +413,24 @@ function itActsAsBinarySearchTree(TreeClass){
 				});
 
 				// TODO: check children reference new parent
+				it('is replaced in the parent', function(){
+					let oldLeft = removalNode.leftChild,
+							oldRight = removalNode.rightChild;
+
+					bst.remove(removalValue);
+
+					expect(oldLeft.parent.value).not.to.equal(removalValue);
+					expect(oldRight.parent.value).not.to.equal(removalValue);
+				});
+			});
+		});
+
+		describe("removing everything", function(){
+			it('survives', function(){
+				BASE_VALUES.forEach((val) => bst.remove(val));
+
+				expect(bst.head).not.to.exist;
+				expect(bst.getSize()).to.equal(0);
 			});
 		});
 	});
