@@ -18,8 +18,7 @@ BinaryHeap.prototype._bubbleUpBalance = bubbleUpBalance;
 export default BinaryHeap;
 
 // Functions:
-function BinaryHeap(config){ // Constructor
-	config = config || {};
+function BinaryHeap(config = {}){ // Constructor
 	if(config.comparator){
 		this._comparator = config.comparator;
 	}
@@ -32,22 +31,22 @@ function peek() {
 }
 
 function insert(element) {
-	this.__elements[this.getSize()] = element;
+	this.__elements.push(element);
 	this._bubbleUpBalance();
 }
 
 function remove() {
-	var lastIndex = this.getSize() - 1;
-	if(lastIndex !== -1){
-		var element = this.__elements[0],
-				last = this.__elements[lastIndex];
-
-		this.__elements[0] = last;
-		this.__elements.length = lastIndex; // Remove last item
-		this._sinkDownBalance();
-
-		return element;
+	if(this.getSize() <= 1){
+		// Remove and return the only item in the heap (or undefined if there aren't any):
+		return this.__elements.pop();
 	}
+	// Otherwise, for larger heaps:
+	var element = this.__elements[0];
+
+	this.__elements[0] = this.__elements.pop(); // Bring last item to the top
+	this._sinkDownBalance(); // And then sink it back down
+
+	return element;
 }
 
 function getSize(){
@@ -71,14 +70,14 @@ function bubbleUpBalance(){
 		if(this._comparator(parent, element)) break;
 
 		// Swap and keep going
-		this.__elements[i] = parent;
 		this.__elements[parentIndex] = element;
+		this.__elements[i] = parent;
 		i = parentIndex;
 	}
 }
 
 function getParentIndex(i){
-	return Math.floor((i - 1) / 2);
+	return Math.floor((i - 1) / 2); // TODO: consider ~~
 }
 
 function sinkDownBalance(){
@@ -92,24 +91,27 @@ function sinkDownBalance(){
 			comparedRight = element;
 
 	while ((comparedIndex = getLeftChildIndex(i)) < size){
-		compared = elements[comparedIndex];
-		comparedIndexRight = comparedIndex + 1;
+		compared = elements[comparedIndex]; // Assume left
 
+		// Test to see if right side is a better candidate:
+		comparedIndexRight = comparedIndex + 1;
 		if(comparedIndexRight < size){
 			comparedRight = elements[comparedIndexRight];
 
-			if(this._comparator(comparedRight, compared)){ // Use right child!
+			if(this._comparator(comparedRight, compared)){ // Right child is, indeed, a better candidate than left.
 				compared = comparedRight;
 				comparedIndex = comparedIndexRight;
 			}
 		}
 
-		if(!this._comparator(compared, element)) break; // Done; everything is settled.
+		// Neither is suitable (the parent is better than both children),
+		// So everything is settled, and we're done.
+		if(!this._comparator(compared, element)) break;
 
-		// Swap:
+		// Swap - raise the stronger child, and demote the parent:
 		elements[i] = compared;
 		elements[comparedIndex] = element;
-		i = comparedIndex; // Keep on bubblin'
+		i = comparedIndex; // Keep on sinkin' the parent down
 	}
 }
 

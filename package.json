@@ -16,7 +16,9 @@
     "mocha": "*",
 
     "babel-cli": "^6.2.0",
-    "istanbul": "^1.0.0-alpha"
+    "istanbul": "^1.0.0-alpha",
+
+    "benchmark": "^2.1.0"
   },
   "scripts": {
     "test": "mocha",
