@@ -1,29 +1,29 @@
-import BinaryHeap from '../../src/heap/binary_heap';
+import BinaryMinHeap from '../../src/heap/binary_min_heap';
 import {buildSmallDistributed} from '../../helpers/number_array_builders';
 import itBehavesLikeAHeap from './_binary_heap';
 
 let expect = require('chai').expect;
 
-describe('BinaryHeap', function(){
-	itBehavesLikeAHeap(BinaryHeap);
+describe('BinaryMinHeap', function(){
+	itBehavesLikeAHeap(BinaryMinHeap);
 
 	describe('Max-Heap (which this is) properties', function(){
 		let heap, elements;
 		beforeEach(function(){
-			heap = new BinaryHeap();
+			heap = new BinaryMinHeap();
 			elements = buildSmallDistributed(50);
 			elements.forEach((val)=> heap.push(val));
 		});
 
-		it('removes the largest element', function(){
+		it('removes the smallest element', function(){
 			let largest = heap.pop();
 
-			let largestRemaining = Math.max.apply([], heap.__elements);
-			expect(largest).to.be.above(largestRemaining);
+			let largestRemaining = Math.min.apply([], heap.__elements);
+			expect(largest).to.be.below(largestRemaining);
 		});
 
-		it('is ordered to provide from largest to smallest', function(){
-			elements.sort(numberSortDesc).forEach(function(nextExpected){
+		it('is ordered to provide from smallest to largest', function(){
+			elements.sort(numberSortAsc).forEach(function(nextExpected){
 				expect(heap.pop()).to.equal(nextExpected);
 			});
 		});
@@ -31,6 +31,6 @@ describe('BinaryHeap', function(){
 	// TODO: test the heap's tree structuring
 });
 
-function numberSortDesc(a, b){
-	return b - a;
+function numberSortAsc(a, b){
+	return a - b;
 }

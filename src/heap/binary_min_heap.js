@@ -1,19 +1,21 @@
 'use strict';
 
 // Dependencies:
-import BinaryHeap from "binary_heap";
+import BinaryHeap from "./binary_heap";
 
 // Inherit prototype:
-BinaryMinHeap.prototype = new BinaryHeap();
+BinaryMinHeap.prototype = Object.create(BinaryHeap.prototype);
+BinaryMinHeap.prototype.constructor = BinaryMinHeap;
+
 BinaryMinHeap.prototype.constructor = BinaryMinHeap;
 BinaryMinHeap.prototype._comparator = minComparitor;
 
 // Exit
-export BinaryMinHeap;
+export default BinaryMinHeap;
 
 // Functions:
 function BinaryMinHeap(config){ // Constructor
-	BinaryHeap.apply(this, arguments);
+	return BinaryHeap.apply(this, arguments);
 }
 
 function minComparitor(elementA, elementB){

@@ -77,7 +77,19 @@ function bubbleUpBalance(){
 }
 
 function getParentIndex(i){
-	return Math.floor((i - 1) / 2); // TODO: consider ~~
+	/*
+	 * TODO: consider Math.floor. Pros and cons for Math.floor below:
+	 *       Pros:
+	 *           - More readable (counter point: a comment)
+	 *           - Allows negatives (counter point: not needed)
+	 *           - Allows > 2^32 elements
+	 *							(2^31 because sign bit, but that's after dividing by 2, so 2^32)
+	 *							(counter point: not needed)
+	 *
+	 *       Cons:
+	 *           - ~~ is way faster in the benchmarks I've run here!
+	*/
+	return ~~((i - 1) / 2);
 }
 
 function sinkDownBalance(){
