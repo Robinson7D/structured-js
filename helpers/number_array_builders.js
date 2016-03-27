@@ -17,7 +17,7 @@ function buildShrinking(size=1000){
 }
 
 function buildGrowing(size){
-	return buildShrinking.call(this, arguments).reverse();
+	return buildShrinking.apply(this, arguments).reverse();
 }
 
 function buildAlternatingConvergent(size=1000){
