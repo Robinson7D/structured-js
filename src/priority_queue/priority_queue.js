@@ -5,7 +5,11 @@ import BinaryHeap from "../heap/binary_heap";
 
 // API:
 PriorityQueue.prototype.enqueue = insertWithPriority;
+PriorityQueue.prototype.add = PriorityQueue.prototype.enqueue;
+
 PriorityQueue.prototype.dequeue = dequeueHighestPriority;
+PriorityQueue.prototype.remove = PriorityQueue.prototype.dequeue;
+
 PriorityQueue.prototype.peek = peek;
 PriorityQueue.prototype.getSize = getSize;
 
@@ -15,7 +19,9 @@ export default PriorityQueue;
 
 // Functions:
 function PriorityQueue(config){ // Constructor:
-	this.__elements = new BinaryHeap();
+	this.__elements = new BinaryHeap({
+		comparator: priorityQueueComparitor
+	});
 }
 
 function priorityQueueComparitor(elementA, elementB){
