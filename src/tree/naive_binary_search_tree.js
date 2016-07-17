@@ -1,27 +1,27 @@
 'use strict';
 
 // API:
-DumbBinarySearchTree.prototype.getSize = getSize;
+NaiveBinarySearchTree.prototype.getSize = getSize;
 
-DumbBinarySearchTree.prototype.findNode = findNode;
-DumbBinarySearchTree.prototype._findClosestNode = _findClosestNode;
-DumbBinarySearchTree.prototype.contains = contains;
+NaiveBinarySearchTree.prototype.findNode = findNode;
+NaiveBinarySearchTree.prototype._findClosestNode = _findClosestNode;
+NaiveBinarySearchTree.prototype.contains = contains;
 
-DumbBinarySearchTree.prototype.insert = insert;
-DumbBinarySearchTree.prototype.remove = remove;
+NaiveBinarySearchTree.prototype.insert = insert;
+NaiveBinarySearchTree.prototype.remove = remove;
 
 // Core logic related to moving the nodes around:
-DumbBinarySearchTree.prototype._buildNode = _buildNode;
-DumbBinarySearchTree.prototype._addNewNode = _addNewNode;
-DumbBinarySearchTree.prototype._removeNode = _removeNode;
+NaiveBinarySearchTree.prototype._buildNode = _buildNode;
+NaiveBinarySearchTree.prototype._addNewNode = _addNewNode;
+NaiveBinarySearchTree.prototype._removeNode = _removeNode;
 
 
 // Exit:
-export default DumbBinarySearchTree;
+export default NaiveBinarySearchTree;
 
 
 // Functions:
-function DumbBinarySearchTree(config){ // Constructor:
+function NaiveBinarySearchTree(config){ // Constructor:
 	this.head = undefined;
 	this.__size = 0;
 }
@@ -117,7 +117,7 @@ function remove(value){
 }
 
 function _removeNode(node){
-	// LOL so biased to the left. Oh well, this is a _dumb_ tree.
+	// LOL so biased to the left. Oh well, this is a _Naive_ tree.
 	// Clever branch balancing or weighting will be saved for other trees
 	if(node.rightChild){
 		// Basically: remove the left sub-tree, but hold onto it.
@@ -125,7 +125,7 @@ function _removeNode(node){
 		// Finally, search the tree for the new node from which
 		// the left sub-tree we're holding should now hang from.
 		//
-		// This is biased, and inefficient, but for a "DumbBinarySearchTree" it'll do.
+		// This is biased, and inefficient, but for a "NaiveBinarySearchTree" it'll do.
 		let oldLeftChild = node.leftChild;
 		node.leftChild = undefined;
 		promoteTo(node.rightChild, node);

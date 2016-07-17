@@ -124,8 +124,6 @@ describe('AVLTree', function(){
 			});
 		});
 
-		// TODO: test more of the proper AVL stuff. That the tree is balanced,
-		//       height value on nodes are all good, etc.
-		//       -> perhaps a stress-test of adding/removing tons of stuff too.
+		// TODO: Perhaps a stress-test of adding/removing tons of stuff too.
 	});
 });

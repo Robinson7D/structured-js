@@ -22,6 +22,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "cover": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha"
+    "cover": "babel-node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha",
+    "makeES5": "babel src --presets babel-preset-es2015 --out-dir dist/es5"
   }
 }

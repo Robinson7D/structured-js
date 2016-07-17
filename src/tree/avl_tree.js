@@ -1,15 +1,15 @@
 'use strict';
 
 // Dependencies:
-import DumbBinarySearchTree from "./dumb_binary_search_tree";
+import NaiveBinarySearchTree from "./naive_binary_search_tree";
 
 // API:
-// Most methods can utilize the generic DumbBinarySearchTree's methods.
+// Most methods can utilize the generic NaiveBinarySearchTree's methods.
 // Searching, getting the size, and updating counts, are all exactly the same.
 //
 // However, anything related to actually adding/removing nodes from the
 // tree will have to override in order to utilize AVL tree balancing.
-AVLTree.prototype = Object.create(DumbBinarySearchTree.prototype);
+AVLTree.prototype = Object.create(NaiveBinarySearchTree.prototype);
 AVLTree.prototype.constructor = AVLTree;
 
 AVLTree.prototype._buildNode = _buildNode;
@@ -25,7 +25,7 @@ export default AVLTree;
 
 // Functions:
 function AVLTree(config){ // Constructor:
-	return DumbBinarySearchTree.apply(this, arguments);
+	return NaiveBinarySearchTree.apply(this, arguments);
 }
 
 function _buildNode(value){ // Constructor:

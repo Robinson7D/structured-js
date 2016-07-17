@@ -17,7 +17,7 @@ LinkedList.prototype.findNodeBefore = findNodeBefore;
 LinkedList.prototype.contains = contains;
 
 // Exit:
-export LinkedList;
+export default LinkedList;
 
 
 // Functions:
