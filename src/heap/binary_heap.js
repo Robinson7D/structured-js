@@ -25,7 +25,6 @@ function BinaryHeap(config = {}){ // Constructor
 	this.__elements = [];
 }
 
-// Functions:
 function peek() {
 	return this.__elements[0];
 }

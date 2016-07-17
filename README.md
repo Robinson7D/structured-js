@@ -31,6 +31,7 @@ Remaining test coverage required:
 
 - Linked List: Require writing specs entirely
 - Trees: Private method testing
+- BloomFilter: Stress test probabilistic qualities
 
 ### Benchmarks
 Benchmarks can be helpful for various reasons.
@@ -45,7 +46,6 @@ The initial implementations of data structures are commented very lightly; given
 * (More) Binary Search Trees. (Various, balancing)
 * Suffix Tree, Radix Tree
 * Suffix Array
-* Bloom Filter
 * Graphs! (Adjacency list, Adjacency matrix)
 
 ### Other:
