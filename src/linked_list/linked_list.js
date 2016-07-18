@@ -22,91 +22,91 @@ export default LinkedList;
 
 // Functions:
 function LinkedList(config){ // Constructor:
-	this.head = undefined;
-	this.__size = 0;
+  this.head = undefined;
+  this.__size = 0;
 }
 
 function buildNode(element, next){ // Constructor:
-	return {
-		element: element,
-		next: next,
-	};
+  return {
+    element: element,
+    next: next,
+  };
 }
 
 function getSize(){
-	return this.__size;
+  return this.__size;
 }
 
 function addToStart(element){
-	return _abstractAdder.call(this, element, "head", this);
+  return _abstractAdder.call(this, element, "head", this);
 }
 
 function addAfter(element, node){
-	return _abstractAdder.call(this, element, "next", node);
+  return _abstractAdder.call(this, element, "next", node);
 }
 
 function _abstractAdder(element, prop, parent){
-	let addingNode = buildNode(element);
+  let addingNode = buildNode(element);
 
-	addingNode.next = parent[prop];
-	parent[prop] = addingNode;
-	this.__size++;
+  addingNode.next = parent[prop];
+  parent[prop] = addingNode;
+  this.__size++;
 
-	return addingNode;
+  return addingNode;
 }
 
 function removeFromStart() {
-	return _abstractRemover.call(this, "head", this);
+  return _abstractRemover.call(this, "head", this);
 }
 
 function removeAfter(node) {
-	return _abstractRemover.call(this, "next", node);
+  return _abstractRemover.call(this, "next", node);
 }
 
 function _abstractRemover(prop, parent){
-	let nodeBefore = parent[prop];
-	if(nodeBefore){
-		let element = nodeBefore.element;
+  let nodeBefore = parent[prop];
+  if(nodeBefore){
+    let element = nodeBefore.element;
 
-		parent[prop] = nodeBefore.next;
-		this.__size--;
+    parent[prop] = nodeBefore.next;
+    this.__size--;
 
-		return element;
-	}
+    return element;
+  }
 }
 
 function peek() {
-	if(this.head){
-		return this.head.element;
-	}
+  if(this.head){
+    return this.head.element;
+  }
 }
 
 function findNodeBefore(searchFuncton){
-	let nodeBefore = null,
-			node = this.head,
-			i = 0;
+  let nodeBefore = null,
+      node = this.head,
+      i = 0;
 
-	while(node){
-		if(searchFuncton(node.element, i)) { return nodeBefore; } // FOUND / DONE
+  while(node){
+    if(searchFuncton(node.element, i)) { return nodeBefore; } // FOUND / DONE
 
-		i++;
-		nodeBefore = node;
-		node = node.next;
-	}
+    i++;
+    nodeBefore = node;
+    node = node.next;
+  }
 }
 
 function findNode(searchFuncton){ // Duplicatey. Maybe just use `findNodeBefore(fn).next` lol
-	let node = this.head,
-			i = 0;
+  let node = this.head,
+      i = 0;
 
-	while(node){
-		if(searchFuncton(node.element, i)) { return node; } // FOUND / DONE
+  while(node){
+    if(searchFuncton(node.element, i)) { return node; } // FOUND / DONE
 
-		i++;
-		node = node.next;
-	}
+    i++;
+    node = node.next;
+  }
 }
 
 function contains(elementToFind){
-	return !!this.findNode((element)=> element === elementToFind);
+  return !!this.findNode((element)=> element === elementToFind);
 }

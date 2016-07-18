@@ -32,7 +32,6 @@ Remaining test coverage required:
 
 - Linked List: Require writing specs entirely
 - Trees: Private method testing
-- BloomFilter: Stress test probabilistic qualities
 
 ### Benchmarks
 Benchmarks can be helpful for various reasons.

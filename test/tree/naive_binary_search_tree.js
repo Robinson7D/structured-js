@@ -4,5 +4,5 @@ import itActsAsBinarySearchTree from './_binary_search_tree';
 let expect = require('chai').expect;
 
 describe('NaiveBinarySearchTree, a simple BST', function(){
-	itActsAsBinarySearchTree(NaiveBinarySearchTree);
+  itActsAsBinarySearchTree(NaiveBinarySearchTree);
 });

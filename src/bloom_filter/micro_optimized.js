@@ -29,21 +29,21 @@ export default MicroOptimizedBloomFilter;
 
 // Functions:
 function MicroOptimizedBloomFilter(config = {}){ // Constructor
-	BloomFilter.apply(this, arguments); // Not optimized, because no.
-	this.__buckets = new Uint32Array( Math.ceil(this._bitsAvailable / 32) );
+  BloomFilter.apply(this, arguments); // Not optimized, because no.
+  this.__buckets = new Uint32Array( Math.ceil(this._bitsAvailable / 32) );
 }
 
 function test(element) {
-	for(var i = 0, len = this._hashFnCount; i < len; i++){
-		var hashedResult = this._hashingFnArr[i](""+element) % this._bitsAvailable;
-		if(!(this.__buckets[Math.floor(hashedResult / 32)] & (1 << (hashedResult % 32)))) return false; // Was NOT ON, so not a match.
-	}
-	return true;
+  for(var i = 0, len = this._hashFnCount; i < len; i++){
+    var hashedResult = this._hashingFnArr[i](""+element) % this._bitsAvailable;
+    if(!(this.__buckets[Math.floor(hashedResult / 32)] & (1 << (hashedResult % 32)))) return false; // Was NOT ON, so not a match.
+  }
+  return true;
 }
 
 function insert(element) {
-	for(var i = 0, len = this._hashFnCount; i < len; i++){
-		var hashedResult = this._hashingFnArr[i](""+element) % this._bitsAvailable;
-		this.__buckets[Math.floor(hashedResult / 32)] |= (1 << (hashedResult % 32)); // set bit ON
-	}
+  for(var i = 0, len = this._hashFnCount; i < len; i++){
+    var hashedResult = this._hashingFnArr[i](""+element) % this._bitsAvailable;
+    this.__buckets[Math.floor(hashedResult / 32)] |= (1 << (hashedResult % 32)); // set bit ON
+  }
 }

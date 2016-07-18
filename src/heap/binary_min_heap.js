@@ -15,9 +15,9 @@ export default BinaryMinHeap;
 
 // Functions:
 function BinaryMinHeap(config){ // Constructor
-	return BinaryHeap.apply(this, arguments);
+  return BinaryHeap.apply(this, arguments);
 }
 
 function minComparitor(elementA, elementB){
-	return elementA < elementB;
+  return elementA < elementB;
 }

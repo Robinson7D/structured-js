@@ -19,31 +19,31 @@ export default PriorityQueue;
 
 // Functions:
 function PriorityQueue(config){ // Constructor:
-	this.__elements = new BinaryHeap({
-		comparator: priorityQueueComparitor
-	});
+  this.__elements = new BinaryHeap({
+    comparator: priorityQueueComparitor
+  });
 }
 
 function priorityQueueComparitor(elementA, elementB){
-	return elementA.priority > elementB.priority;
+  return elementA.priority > elementB.priority;
 }
 
 function insertWithPriority(element, priority) {
-	this.__elements.push({ element, priority });
+  this.__elements.push({ element, priority });
 }
 
 function dequeueHighestPriority() {
-	if(this.getSize()){ // Otherwise, undefined...
-		return this.__elements.pop()['element'];
-	}
+  if(this.getSize()){ // Otherwise, undefined...
+    return this.__elements.pop()['element'];
+  }
 }
 
 function peek() {
-	if(this.getSize()){ // Otherwise, undefined...
-		return this.__elements.peek()['element'];
-	}
+  if(this.getSize()){ // Otherwise, undefined...
+    return this.__elements.peek()['element'];
+  }
 }
 
 function getSize(){
-	return this.__elements.getSize();
+  return this.__elements.getSize();
 }
