@@ -23,6 +23,10 @@ export default BloomFilter;
 
 // Functions:
 function BloomFilter(config = {}){ // Constructor
+	if(config.bitsAvailable){ // Optional
+		this._bitsAvailable = config.bitsAvailable;
+	}
+
 	this._hashingFnArr = config.hashingFnArr || getHashingFnArr.call(this, config);
 	this._hashFnCount = this._hashingFnArr.length;
 
@@ -77,9 +81,9 @@ function prepareBuckets(){
 }
 
 function getHashingFnArr(config){
-	var hashFnCount = config.hashFnCount || this._hashFnCount;
+	var hashFnCount = config.hashFnCount == null ? this._hashFnCount : config.hashFnCount;
 
-	if(hashFnCount < 0) {
+	if(hashFnCount < 1) {
 		throw new Error(
 			'BloomFilters require a positive number of hashing functions, recieved count: ',
 			hashFnCount

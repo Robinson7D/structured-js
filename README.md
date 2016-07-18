@@ -9,6 +9,7 @@ Meaning: I advise against using this library for anything production, particular
 
 ## Currently available structures:
 
+- Bloom Filter
 - Binary Heap (+ Min variation)
 - Priority Queue (based on underlying Binary Heap)
 - AVL Tree
