@@ -1,28 +1,33 @@
 {
   "name": "structured-js",
   "private": false,
-  "version": "0.0.1",
-  "description": "Common data structures implemented in Javascript",
-  "repository": "http://dylancodes.net",
+  "version": "1.0.0",
   "license": "MIT",
+  "description": "Common data structures implemented in Javascript",
+  "author": "Dylan Robinson <dylan@dylancodes.net> (http://dylancodes.net)",
+  "repository": {
+    "type": "git",
+    "url": "http://dylancodes.net"
+  },
   "dependencies": {
     "babel-polyfill": "^6.7.2"
   },
   "devDependencies": {
+    "babel-cli": "^6.11.4",
     "babel-core": "^6.0.20",
-    "babel-preset-es2015": "^6.0.15",
-
+    "babel-register": "^6.11.5",
+    "babel-preset-es2015": "^6.9.0",
+    "benchmark": "^2.1.0",
     "chai": "*",
-    "mocha": "*",
-
-    "babel-cli": "^6.2.0",
     "istanbul": "^1.0.0-alpha",
-
-    "benchmark": "^2.1.0"
+    "mocha": "*"
   },
   "scripts": {
     "test": "mocha",
-    "cover": "node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha -- --timeout 5000",
+    "cover": "node ./node_modules/istanbul/lib/cli cover node_modules/mocha/bin/_mocha -- --timeout 10000",
     "makeES5": "babel src --presets babel-preset-es2015 --out-dir dist/es5"
+  },
+  "directories": {
+    "test": "test"
   }
 }
