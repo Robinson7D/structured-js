@@ -1,7 +1,7 @@
 'use strict';
 
 // Dependencies:
-import {getHashingFn} from "../../helpers/hash";
+import murmur2 from "../../helpers/hash";
 
 const SIZE_OF_INT = 32;
 
@@ -96,7 +96,12 @@ function getHashingFnArr(config){
   for(var i = 0; i < hashFnCount; i++){
     hashingFns.push(getHashingFn(i));
   }
+
   return hashingFns;
+
+  function getHashingFn(seed){ // Apply partially
+    return function(str){ return murmur2(seed, str); }
+  }
 }
 
 /*
